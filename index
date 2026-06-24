@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026高考特供：终极无敌许愿池</title>
+    <style>
+        :root {
+            --primary-blue: #2a75d3;
+            --pool-water: #4fa8ff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* 许愿池本体 */
+        .wishing-pool {
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, #76c0ff 0%, var(--pool-water) 70%, var(--primary-blue) 100%);
+            border: 12px solid #e0e0e0;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            position: relative;
+            box-shadow: inset 0 10px 20px rgba(0,0,0,0.2), 0 8px 16px rgba(0,0,0,0.1);
+            overflow: visible; /* 允许加分文字飘出池子 */
+            cursor: pointer;
+        }
+
+        /* 荡漾的水纹效果 */
+        .wishing-pool::before {
+            content: '';
+            position: absolute;
+            top: 10%; left: 10%; right: 10%; bottom: 10%;
+            border: 2px dashed rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: spin 20s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* 飘浮文字动画 */
+        .floating-text {
+            position: absolute;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 2px 4px rgba(0,0,0,0.5);
+            pointer-events: none;
+            animation: floatUp 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            white-space: nowrap;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0; top: 50%; left: 50%; }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+            100% { transform: translate(-50%, -150%) scale(1); opacity: 0; top: 10%; left: 50%; }
+        }
+
+        /* 按钮样式 */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .btn-normal {
+            background: linear-gradient(145deg, #ffca28, #f57f17);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 127, 23, 0.4);
+        }
+
+        .btn-premium {
+            background: linear-gradient(145deg, #ec407a, #b71c1c);
+            color: white;
+            box-shadow: 0 4px 15px rgba(183, 28, 28, 0.4);
+        }
+
+        /* 弹窗遮罩 */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* 弹窗主体 */
+        .modal {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            width: 80%;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal h3 { margin-top: 0; color: #333; }
+        .modal p { color: #666; font-size: 15px; line-height: 1.5; margin-bottom: 25px; }
+
+        .btn-pay {
+            background: #25d366;
+            color: white;
+            width: 100%;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>2026 高考金榜题名许愿池</h1>
+        <div class="subtitle">分数不够？硬币来凑！（纯属娱乐，祝金榜题名）</div>
+
+        <div class="wishing-pool" id="wishingPool"></div>
+
+        <div class="btn-group">
+            <button class="btn-normal" onclick="castCoin('normal')">🪙 投普通硬币 (+1分)</button>
+            <button class="btn-premium" onclick="castCoin('premium')">💎 投付费硬币 (+100分)</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="payModal">
+        <div class="modal">
+            <h3>⚠️ 提示</h3>
+            <p>要向白付费</p>
+            <button class="btn-pay" onclick="handlePaySubmit()">确认支付</button>
+        </div>
+    </div>
+
+    <script>
+        let hasPaidBefore = false; // 记录是否已经经历过第一次付费弹窗
+
+        // 使用标准的 Web Audio API 动态生成逼真的“落水”音效（无需依赖外部音频文件，确保100%有声音）
+        function playSplashSound() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                const ctx = new AudioContext();
+                
+                // 声音源 1：低频冲击音（模拟入水瞬间）
+                const osc1 = ctx.createOscillator();
+                const gain1 = ctx.createGain();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(150, ctx.currentTime);
+                osc1.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.15);
+                gain1.gain.setValueAtTime(0.5, ctx.currentTime);
+                gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+                osc1.connect(gain1);
+                gain1.connect(ctx.destination);
+                
+                // 声音源 2：高频水花激起音
+                const osc2 = ctx.createOscillator();
+                const gain2 = ctx.createGain();
+                osc2.type = 'triangle';
+                osc2.frequency.setValueAtTime(600, ctx.currentTime);
+                osc2.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.2);
+                gain2.gain.setValueAtTime(0.2, ctx.currentTime);
+                gain2.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+                osc2.connect(gain2);
+                gain2.connect(ctx.destination);
+
+                osc1.start();
+                osc2.start();
+                osc1.stop(ctx.currentTime + 0.15);
+                osc2.stop(ctx.currentTime + 0.25);
+            } catch (e) {
+                console.log("音频播放受浏览器安全策略限制，需用户交互后生效");
+            }
+        }
+
+        // 核心投放逻辑
+        function castCoin(type) {
+            if (type === 'normal') {
+                triggerWishSuccess("总分加一");
+            } else if (type === 'premium') {
+                if (!hasPaidBefore) {
+                    // 第一次点击付费硬币，弹出遮罩
+                    document.getElementById('payModal').classList.add('active');
+                } else {
+                    // 已经触发过剧情后，后续点击直接获得 100 分
+                    triggerWishSuccess("总分加一百！🔥");
+                }
+            }
+        }
+
+        // 点击支付按钮的处理
+        function handlePaySubmit() {
+            // 弹出反转提示
+            alert("你爹不可能向你要钱");
+            // 关闭弹窗
+            document.getElementById('payModal').classList.remove('active');
+            // 标记已付费（解锁后续直接充值功能）
+            hasPaidBefore = true;
+            // 成功获得付费硬币
+            triggerWishSuccess("总分加一百！🔥");
+        }
+
+        // 成功投放：播放音效并在水池中央漂浮文字
+        function triggerWishSuccess(textContent) {
+            playSplashSound();
+
+            const pool = document.getElementById('wishingPool');
+            const textElement = document.createElement('div');
+            textElement.className = 'floating-text';
+            textElement.innerText = textContent;
+
+            // 让文字在水池中心稍微随机抖动一点位置，更生动
+            const randomX = Math.floor(Math.random() * 40) - 20; 
+            textElement.style.left = `calc(50% + ${randomX}px)`;
+
+            pool.appendChild(textElement);
+
+            // 动画结束后自动销毁 DOM 节点，防止内存占用
+            textElement.addEventListener('animationend', () => {
+                textElement.remove();
+            });
+        }
+    </script>
+</body>
+</html>
