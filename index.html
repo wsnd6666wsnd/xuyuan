@@ -3,282 +3,1246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026高考特供：终极无敌许愿池</title>
+    <title>高考许愿池 - 金榜题名</title>
     <style>
         :root {
-            --primary-blue: #2a75d3;
-            --pool-water: #4fa8ff;
+            --bg: #070a14;
+            --surface: #111827;
+            --gold: #d4a745;
+            --gold-light: #f0d78c;
+            --gold-dark: #8b6914;
+            --stone: #5a4a3a;
+            --stone-light: #7a6a55;
+            --stone-dark: #3a2a1a;
+            --water: #0a1628;
+            --red: #c23a2b;
+            --red-light: #e85d4a;
+            --text: #f5e6c8;
+            --text-muted: #b8a88a;
+            --radius: 20px;
+            --font-cn: 'STKaiti', 'KaiTi', '楷体', 'Noto Serif SC', 'SimSun', '宋体', serif;
+            --font-mono: 'SF Mono', 'Consolas', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            height: 100%;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-cn);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            background-image:
+                radial-gradient(2px 2px at 15% 8%, rgba(255, 255, 255, 0.6), transparent),
+                radial-gradient(1.5px 1.5px at 25% 18%, rgba(255, 255, 255, 0.5), transparent),
+                radial-gradient(2px 2px at 40% 5%, rgba(255, 255, 255, 0.7), transparent),
+                radial-gradient(1px 1px at 55% 12%, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(1.5px 1.5px at 68% 7%, rgba(255, 255, 255, 0.6), transparent),
+                radial-gradient(2px 2px at 78% 14%, rgba(255, 255, 255, 0.5), transparent),
+                radial-gradient(1px 1px at 85% 9%, rgba(255, 255, 255, 0.55), transparent),
+                radial-gradient(1.5px 1.5px at 92% 16%, rgba(255, 255, 255, 0.45), transparent),
+                radial-gradient(1px 1px at 10% 22%, rgba(255, 255, 255, 0.35), transparent),
+                radial-gradient(2px 2px at 32% 25%, rgba(255, 255, 255, 0.5), transparent),
+                radial-gradient(1px 1px at 48% 20%, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(1.5px 1.5px at 60% 28%, rgba(255, 255, 255, 0.45), transparent),
+                radial-gradient(2px 2px at 75% 22%, rgba(255, 255, 255, 0.5), transparent),
+                radial-gradient(1px 1px at 88% 26%, rgba(255, 255, 255, 0.35), transparent),
+                radial-gradient(1.5px 1.5px at 20% 30%, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(1px 1px at 50% 32%, rgba(255, 255, 255, 0.3), transparent);
+            background-attachment: fixed;
+        }
+
+        /* 月光 */
+        .moon {
+            position: fixed;
+            top: 6%;
+            right: 12%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(255, 240, 210, 0.95) 0%, rgba(255, 220, 170, 0.7) 40%, rgba(255, 200, 140, 0.15) 65%, transparent 72%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            box-shadow: 0 0 60px 30px rgba(255, 220, 160, 0.25), 0 0 120px 60px rgba(255, 200, 130, 0.12), 0 0 200px 100px rgba(255, 180, 100, 0.06);
+            animation: moonGlow 4s ease-in-out infinite;
+        }
+        @keyframes moonGlow {
+            0%,
+            100% {
+                box-shadow: 0 0 60px 30px rgba(255, 220, 160, 0.25), 0 0 120px 60px rgba(255, 200, 130, 0.12);
+            }
+            50% {
+                box-shadow: 0 0 80px 40px rgba(255, 230, 170, 0.35), 0 0 150px 75px rgba(255, 210, 140, 0.18);
+            }
+        }
+
+        /* 寺庙屋顶剪影 */
+        .temple-roof {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 320px;
+            height: 100px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.7;
+        }
+        .temple-roof::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 170px solid transparent;
+            border-right: 170px solid transparent;
+            border-bottom: 85px solid #1a1a28;
+            filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.6));
+        }
+        .temple-roof::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 145px solid transparent;
+            border-right: 145px solid transparent;
+            border-bottom: 65px solid #141420;
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.5));
+        }
+        .roof-ridge {
+            position: absolute;
+            bottom: 62px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 30px;
+            background: #1a1a28;
+            border-radius: 4px 4px 0 0;
+            z-index: 1;
+        }
+        .roof-ridge::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: #1a1a28;
+            border-radius: 50%;
+        }
+
+        /* 主容器 */
+        .main-container {
+            position: relative;
+            z-index: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 560px;
+        }
+
+        /* 标题 */
+        .title-area {
+            text-align: center;
+            z-index: 2;
+        }
+        .title-area h1 {
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--gold-light);
+            text-shadow: 0 0 30px rgba(240, 215, 140, 0.5), 0 0 60px rgba(200, 160, 60, 0.3);
+            margin-bottom: 4px;
+            font-family: var(--font-cn);
+        }
+        .title-area .subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+        }
+
+        /* 许愿池场景 */
+        .pond-scene {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            aspect-ratio: 1 / 0.85;
+            z-index: 2;
+        }
+
+        /* 石头池子边框 */
+        .stone-pond {
+            position: absolute;
+            inset: 5% 2% 8% 2%;
+            border-radius: 48% 48% 46% 46%;
+            background: radial-gradient(ellipse at 50% 45%, #3d3028 0%, #2a1f18 30%, #1a1210 60%, #3d3028 80%, #2a1f18 100%);
+            box-shadow:
+                inset 0 8px 30px rgba(0, 0, 0, 0.7),
+                0 6px 30px rgba(0, 0, 0, 0.6),
+                0 2px 8px rgba(0, 0, 0, 0.5),
+                0 0 0 6px #3d3028,
+                0 0 0 10px #2a1f18,
+                0 0 0 14px #1f1712,
+                0 0 0 18px #1a1210;
+            z-index: 3;
+            pointer-events: none;
             overflow: hidden;
         }
-
-        .container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            width: 90%;
-            max-width: 500px;
-            position: relative;
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .subtitle {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-
-        /* 许愿池本体 */
-        .wishing-pool {
-            width: 260px;
-            height: 260px;
-            background: radial-gradient(circle, #76c0ff 0%, var(--pool-water) 70%, var(--primary-blue) 100%);
-            border: 12px solid #e0e0e0;
-            border-radius: 50%;
-            margin: 0 auto 30px;
-            position: relative;
-            box-shadow: inset 0 10px 20px rgba(0,0,0,0.2), 0 8px 16px rgba(0,0,0,0.1);
-            overflow: visible; /* 允许加分文字飘出池子 */
-            cursor: pointer;
-        }
-
-        /* 荡漾的水纹效果 */
-        .wishing-pool::before {
+        .stone-pond::before {
             content: '';
             position: absolute;
-            top: 10%; left: 10%; right: 10%; bottom: 10%;
-            border: 2px dashed rgba(255,255,255,0.3);
-            border-radius: 50%;
-            animation: spin 20s linear infinite;
+            inset: 6px;
+            border-radius: 47% 47% 45% 45%;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.04);
+            pointer-events: none;
+        }
+        /* 石头纹理 */
+        .stone-pond::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background:
+                radial-gradient(ellipse at 25% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 40%),
+                radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 35%),
+                radial-gradient(ellipse at 40% 70%, rgba(0, 0, 0, 0.3) 0%, transparent 30%);
+            pointer-events: none;
         }
 
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        /* Canvas水面 */
+        #waterCanvas {
+            position: absolute;
+            inset: 10% 7% 13% 7%;
+            border-radius: 46% 46% 44% 44%;
+            z-index: 4;
+            pointer-events: none;
+            width: calc(100% - 14%);
+            height: calc(100% - 23%);
+            top: 10%;
+            left: 7%;
+        }
 
-        /* 飘浮文字动画 */
+        /* 分数显示浮层 */
+        .score-overlay {
+            position: absolute;
+            top: 28%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 6;
+            pointer-events: none;
+            text-align: center;
+        }
+        .score-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            opacity: 0.7;
+            margin-bottom: 2px;
+        }
+        .score-value {
+            font-size: clamp(2.4rem, 5vw, 3.2rem);
+            font-weight: 900;
+            color: var(--gold-light);
+            text-shadow: 0 0 25px rgba(240, 210, 130, 0.7), 0 0 50px rgba(200, 150, 50, 0.4), 0 4px 8px rgba(0, 0, 0, 0.5);
+            font-family: var(--font-cn);
+            letter-spacing: 0.05em;
+            line-height: 1;
+        }
+
+        /* 浮动文字容器 */
+        .floating-texts {
+            position: absolute;
+            inset: 0;
+            z-index: 7;
+            pointer-events: none;
+            overflow: visible;
+        }
         .floating-text {
             position: absolute;
-            font-weight: bold;
-            color: #fff;
-            text-shadow: 1px 2px 4px rgba(0,0,0,0.5);
+            font-family: var(--font-cn);
+            font-weight: 700;
+            color: #f0d78c;
+            text-shadow: 0 0 18px rgba(240, 210, 130, 0.9), 0 0 35px rgba(200, 150, 50, 0.5), 0 0 55px rgba(180, 120, 30, 0.3);
             pointer-events: none;
-            animation: floatUp 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
             white-space: nowrap;
+            animation: floatUpDisappear 2.8s ease-out forwards;
+            font-size: 1.1rem;
+            letter-spacing: 0.06em;
+            z-index: 8;
+        }
+        @keyframes floatUpDisappear {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0.5);
+            }
+            12% {
+                opacity: 1;
+                transform: translateY(-8px) scale(1.05);
+            }
+            25% {
+                opacity: 1;
+                transform: translateY(-20px) scale(1);
+            }
+            60% {
+                opacity: 0.7;
+                transform: translateY(-55px) scale(1.02);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-90px) scale(0.9);
+                filter: blur(4px);
+            }
         }
 
-        @keyframes floatUp {
-            0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0; top: 50%; left: 50%; }
-            20% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
-            100% { transform: translate(-50%, -150%) scale(1); opacity: 0; top: 10%; left: 50%; }
-        }
-
-        /* 按钮样式 */
-        .btn-group {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        button {
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.2s;
+        /* 按钮区域 */
+        .buttons-area {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 16px;
+            z-index: 5;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0 10px;
+        }
+        .coin-btn {
+            position: relative;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-cn);
+            font-weight: 700;
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            color: #3a2010;
+            z-index: 5;
+        }
+        .coin-btn:active {
+            transform: scale(0.9);
+            transition: transform 0.1s ease-out;
         }
 
-        button:active {
-            transform: scale(0.95);
+        /* 普通硬币 */
+        .coin-btn.normal {
+            background: radial-gradient(circle at 40% 35%, #e8c97a 0%, #c8963e 40%, #8b6914 75%, #5c3d0a 100%);
+            border: 3px solid #a07828;
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.5), 0 0 0 4px rgba(160, 120, 40, 0.3);
+        }
+        .coin-btn.normal:hover {
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6), 0 0 0 6px rgba(200, 150, 50, 0.45), 0 0 40px rgba(200, 150, 50, 0.3);
+            transform: translateY(-3px);
+        }
+        .coin-btn.normal::after {
+            content: '';
+            position: absolute;
+            inset: 14px;
+            background: #1a1008;
+            border-radius: 3px;
+            pointer-events: none;
+            transform: rotate(0deg);
+        }
+        .coin-btn.normal .btn-label {
+            position: relative;
+            z-index: 2;
+            color: #f5e6c8;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            font-size: 0.7rem;
+            line-height: 1.2;
         }
 
-        .btn-normal {
-            background: linear-gradient(145deg, #ffca28, #f57f17);
-            color: white;
-            box-shadow: 0 4px 15px rgba(245, 127, 23, 0.4);
+        /* 付费硬币 */
+        .coin-btn.premium {
+            background: radial-gradient(circle at 40% 35%, #fff8e0 0%, #f0d78c 25%, #d4a745 55%, #8b6914 80%, #5c3d0a 100%);
+            border: 3px solid #c8963e;
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.5), 0 0 0 4px rgba(200, 160, 60, 0.4), 0 0 25px rgba(240, 200, 100, 0.35);
+            animation: premiumShine 2.5s ease-in-out infinite;
+        }
+        @keyframes premiumShine {
+            0%,
+            100% {
+                box-shadow: 0 6px 22px rgba(0, 0, 0, 0.5), 0 0 0 4px rgba(200, 160, 60, 0.4), 0 0 25px rgba(240, 200, 100, 0.35);
+            }
+            50% {
+                box-shadow: 0 6px 28px rgba(0, 0, 0, 0.55), 0 0 0 8px rgba(220, 180, 80, 0.55), 0 0 50px rgba(255, 220, 130, 0.55);
+            }
+        }
+        .coin-btn.premium:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 0 8px rgba(220, 180, 80, 0.5), 0 0 50px rgba(255, 220, 130, 0.45);
+            transform: translateY(-3px);
+        }
+        .coin-btn.premium::after {
+            content: '';
+            position: absolute;
+            inset: 12px;
+            background: #1a1008;
+            border-radius: 3px;
+            pointer-events: none;
+            transform: rotate(0deg);
+            box-shadow: inset 0 0 6px rgba(240, 200, 100, 0.3);
+        }
+        .coin-btn.premium .btn-label {
+            position: relative;
+            z-index: 2;
+            color: #fffef5;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 10px rgba(255, 220, 120, 0.5);
+            font-size: 0.7rem;
+            line-height: 1.2;
         }
 
-        .btn-premium {
-            background: linear-gradient(145deg, #ec407a, #b71c1c);
-            color: white;
-            box-shadow: 0 4px 15px rgba(183, 28, 28, 0.4);
+        /* 分数显示（在按钮之间） */
+        .score-between {
+            font-family: var(--font-cn);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gold-light);
+            text-shadow: 0 0 15px rgba(240, 200, 120, 0.5);
+            letter-spacing: 0.06em;
+            min-width: 60px;
+            text-align: center;
+            z-index: 5;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 8px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(180, 140, 60, 0.3);
         }
 
-        /* 弹窗遮罩 */
+        /* 弹窗 */
         .modal-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 100;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease;
-            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
         }
-
         .modal-overlay.active {
             opacity: 1;
             pointer-events: auto;
         }
-
-        /* 弹窗主体 */
-        .modal {
-            background: white;
-            padding: 30px;
+        .modal-dialog {
+            background: linear-gradient(180deg, #2a1f14 0%, #1a1008 30%, #1a1008 70%, #2a1f14 100%);
+            border: 3px solid #8b6914;
             border-radius: 16px;
-            width: 80%;
-            max-width: 320px;
+            padding: 28px 24px 20px;
+            max-width: 380px;
+            width: 90%;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 0 6px rgba(60, 30, 10, 0.6), 0 0 0 10px rgba(40, 20, 8, 0.5);
+            transform: translateY(20px);
+            transition: transform 0.35s ease;
         }
-
-        .modal-overlay.active .modal {
-            transform: scale(1);
+        .modal-overlay.active .modal-dialog {
+            transform: translateY(0);
         }
-
-        .modal h3 { margin-top: 0; color: #333; }
-        .modal p { color: #666; font-size: 15px; line-height: 1.5; margin-bottom: 25px; }
-
-        .btn-pay {
-            background: #25d366;
-            color: white;
-            width: 100%;
+        .modal-dialog::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            right: 12px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(200, 150, 50, 0.5), transparent);
+            pointer-events: none;
+        }
+        .modal-dialog::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 12px;
+            right: 12px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(200, 150, 50, 0.5), transparent);
+            pointer-events: none;
+        }
+        .modal-icon {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .modal-title {
+            font-family: var(--font-cn);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #f0d78c;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+            text-shadow: 0 0 20px rgba(240, 200, 120, 0.5);
+        }
+        .modal-message {
+            font-family: var(--font-cn);
+            font-size: 1rem;
+            color: #e0d0b0;
+            letter-spacing: 0.06em;
+            margin-bottom: 16px;
+            line-height: 1.6;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .modal-message.shock {
+            font-size: 1.2rem;
+            color: #ffcc80;
+            animation: shockPulse 0.5s ease-out;
+        }
+        @keyframes shockPulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            30% {
+                transform: scale(1.08);
+            }
+        }
+        .btn-pay {
+            display: inline-block;
+            padding: 12px 36px;
+            background: linear-gradient(180deg, #c23a2b 0%, #8b1a0e 100%);
+            color: #fff;
+            border: 2px solid #e85d4a;
+            border-radius: 25px;
+            font-family: var(--font-cn);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 16px rgba(180, 30, 10, 0.5);
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn-pay:hover {
+            background: linear-gradient(180deg, #d44a38 0%, #a01e10 100%);
+            box-shadow: 0 6px 22px rgba(200, 40, 15, 0.6);
+            transform: translateY(-2px);
+        }
+        .btn-pay:active {
+            transform: scale(0.94);
+            transition: transform 0.1s ease;
+        }
+        .btn-pay.hidden {
+            display: none;
+        }
+        .modal-close-hint {
+            font-size: 0.7rem;
+            color: #887766;
+            margin-top: 10px;
+            letter-spacing: 0.05em;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .modal-close-hint.visible {
+            opacity: 0.7;
+        }
+
+        /* 响应式 */
+        @media (max-width: 480px) {
+            .pond-scene {
+                max-width: 340px;
+            }
+            .coin-btn {
+                width: 58px;
+                height: 58px;
+            }
+            .coin-btn .btn-label {
+                font-size: 0.6rem;
+            }
+            .coin-btn::after {
+                inset: 10px;
+            }
+            .coin-btn.premium::after {
+                inset: 9px;
+            }
+            .score-between {
+                font-size: 0.9rem;
+                padding: 6px 10px;
+                min-width: 45px;
+            }
+            .floating-text {
+                font-size: 0.9rem;
+            }
+            .temple-roof {
+                width: 240px;
+                height: 75px;
+            }
+            .temple-roof::before {
+                border-left-width: 130px;
+                border-right-width: 130px;
+                border-bottom-width: 65px;
+            }
+            .temple-roof::after {
+                border-left-width: 110px;
+                border-right-width: 110px;
+                border-bottom-width: 48px;
+                bottom: -15px;
+            }
+            .roof-ridge {
+                bottom: 47px;
+                height: 22px;
+            }
+            .moon {
+                width: 50px;
+                height: 50px;
+                top: 4%;
+                right: 8%;
+            }
+        }
+        @media (max-width: 360px) {
+            .pond-scene {
+                max-width: 280px;
+            }
+            .coin-btn {
+                width: 48px;
+                height: 48px;
+            }
+            .coin-btn .btn-label {
+                font-size: 0.55rem;
+            }
+            .coin-btn::after {
+                inset: 8px;
+            }
+            .coin-btn.premium::after {
+                inset: 7px;
+            }
+            .score-between {
+                font-size: 0.75rem;
+                padding: 5px 8px;
+                min-width: 36px;
+            }
+            .buttons-area {
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>2026 高考金榜题名许愿池</h1>
-        <div class="subtitle">分数不够？硬币来凑！（纯属娱乐，祝金榜题名）</div>
+    <!-- 月光 -->
+    <div class="moon" aria-hidden="true"></div>
 
-        <div class="wishing-pool" id="wishingPool"></div>
+    <!-- 寺庙屋顶 -->
+    <div class="temple-roof" aria-hidden="true">
+        <div class="roof-ridge"></div>
+    </div>
 
-        <div class="btn-group">
-            <button class="btn-normal" onclick="castCoin('normal')">🪙 投普通硬币 (+1分)</button>
-            <button class="btn-premium" onclick="castCoin('premium')">💎 投付费硬币 (+100分)</button>
+    <!-- 主容器 -->
+    <div class="main-container">
+        <!-- 标题 -->
+        <div class="title-area">
+            <h1>🏮 高考许愿池 🏮</h1>
+            <p class="subtitle">金榜题名 · 前程似锦</p>
+        </div>
+
+        <!-- 许愿池场景 -->
+        <div class="pond-scene" id="pondScene">
+            <!-- 石头池子 -->
+            <div class="stone-pond"></div>
+            <!-- 水面Canvas -->
+            <canvas id="waterCanvas"></canvas>
+            <!-- 分数浮层 -->
+            <div class="score-overlay">
+                <div class="score-label">当 前 分 数</div>
+                <div class="score-value" id="scoreDisplay">0</div>
+            </div>
+            <!-- 浮动文字 -->
+            <div class="floating-texts" id="floatingTexts"></div>
+        </div>
+
+        <!-- 按钮区域 -->
+        <div class="buttons-area">
+            <button class="coin-btn normal" id="btnNormal" title="投一枚普通硬币 +1分">
+                <span class="btn-label">普通<br>铜钱</span>
+            </button>
+            <div class="score-between" id="scoreBetween">
+                <span style="font-size:0.7rem;opacity:0.7;">总分</span><br>
+                <span style="font-size:1.3rem;" id="scoreBetweenValue">0</span>
+            </div>
+            <button class="coin-btn premium" id="btnPremium" title="投一枚付费硬币 +100分">
+                <span class="btn-label">付费<br>金钱</span>
+            </button>
         </div>
     </div>
 
-    <div class="modal-overlay" id="payModal">
-        <div class="modal">
-            <h3>⚠️ 提示</h3>
-            <p>要向白付费</p>
-            <button class="btn-pay" onclick="handlePaySubmit()">确认支付</button>
+    <!-- 付费弹窗 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-dialog">
+            <span class="modal-icon">🪙</span>
+            <div class="modal-title">付费硬币</div>
+            <div class="modal-message" id="modalMessage">要向白付费</div>
+            <button class="btn-pay" id="btnPay">支 付</button>
+            <div class="modal-close-hint" id="modalCloseHint">弹窗即将关闭...</div>
         </div>
     </div>
 
     <script>
-        let hasPaidBefore = false; // 记录是否已经经历过第一次付费弹窗
+        (function() {
+            // ==================== 元素引用 ====================
+            const pondScene = document.getElementById('pondScene');
+            const canvas = document.getElementById('waterCanvas');
+            const ctx = canvas.getContext('2d');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const scoreBetweenValue = document.getElementById('scoreBetweenValue');
+            const floatingTexts = document.getElementById('floatingTexts');
+            const btnNormal = document.getElementById('btnNormal');
+            const btnPremium = document.getElementById('btnPremium');
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalMessage = document.getElementById('modalMessage');
+            const btnPay = document.getElementById('btnPay');
+            const modalCloseHint = document.getElementById('modalCloseHint');
 
-        // 使用标准的 Web Audio API 动态生成逼真的“落水”音效（无需依赖外部音频文件，确保100%有声音）
-        function playSplashSound() {
-            try {
-                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                const ctx = new AudioContext();
-                
-                // 声音源 1：低频冲击音（模拟入水瞬间）
-                const osc1 = ctx.createOscillator();
-                const gain1 = ctx.createGain();
-                osc1.type = 'sine';
-                osc1.frequency.setValueAtTime(150, ctx.currentTime);
-                osc1.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.15);
-                gain1.gain.setValueAtTime(0.5, ctx.currentTime);
-                gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
-                osc1.connect(gain1);
-                gain1.connect(ctx.destination);
-                
-                // 声音源 2：高频水花激起音
-                const osc2 = ctx.createOscillator();
-                const gain2 = ctx.createGain();
-                osc2.type = 'triangle';
-                osc2.frequency.setValueAtTime(600, ctx.currentTime);
-                osc2.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.2);
-                gain2.gain.setValueAtTime(0.2, ctx.currentTime);
-                gain2.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
-                osc2.connect(gain2);
-                gain2.connect(ctx.destination);
+            // ==================== 状态 ====================
+            let totalScore = 0;
+            let premiumUnlocked = false; // 付费硬币是否已解锁（第一次弹窗后）
+            let isModalOpen = false;
+            let paymentClicked = false;
 
-                osc1.start();
-                osc2.start();
-                osc1.stop(ctx.currentTime + 0.15);
-                osc2.stop(ctx.currentTime + 0.25);
-            } catch (e) {
-                console.log("音频播放受浏览器安全策略限制，需用户交互后生效");
+            // ==================== Canvas设置 ====================
+            let canvasW, canvasH;
+            let pondCenterX, pondCenterY, pondRadiusX, pondRadiusY;
+            let waterTopY, waterBottomY;
+
+            function resizeCanvas() {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                canvasW = rect.width;
+                canvasH = rect.height;
+                canvas.width = canvasW * dpr;
+                canvas.height = canvasH * dpr;
+                canvas.style.width = canvasW + 'px';
+                canvas.style.height = canvasH + 'px';
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.scale(dpr, dpr);
+
+                pondCenterX = canvasW / 2;
+                pondCenterY = canvasH * 0.48;
+                pondRadiusX = canvasW * 0.41;
+                pondRadiusY = canvasH * 0.38;
+                waterTopY = pondCenterY - pondRadiusY * 0.75;
+                waterBottomY = pondCenterY + pondRadiusY * 0.7;
             }
-        }
 
-        // 核心投放逻辑
-        function castCoin(type) {
-            if (type === 'normal') {
-                triggerWishSuccess("总分加一");
-            } else if (type === 'premium') {
-                if (!hasPaidBefore) {
-                    // 第一次点击付费硬币，弹出遮罩
-                    document.getElementById('payModal').classList.add('active');
-                } else {
-                    // 已经触发过剧情后，后续点击直接获得 100 分
-                    triggerWishSuccess("总分加一百！🔥");
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+            });
+            resizeCanvas();
+
+            // ==================== 音效系统 ====================
+            let audioCtx = null;
+
+            function initAudio() {
+                if (!audioCtx) {
+                    try {
+                        audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+                    } catch (e) {
+                        console.warn('无法初始化音频上下文');
+                    }
+                }
+                if (audioCtx && audioCtx.state === 'suspended') {
+                    audioCtx.resume();
                 }
             }
-        }
 
-        // 点击支付按钮的处理
-        function handlePaySubmit() {
-            // 弹出反转提示
-            alert("你爹不可能向你要钱");
-            // 关闭弹窗
-            document.getElementById('payModal').classList.remove('active');
-            // 标记已付费（解锁后续直接充值功能）
-            hasPaidBefore = true;
-            // 成功获得付费硬币
-            triggerWishSuccess("总分加一百！🔥");
-        }
+            function playSplashSound() {
+                if (!audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    // 主水滴声 - 频率快速下降
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(680, now);
+                    osc.frequency.exponentialRampToValueAtTime(120, now + 0.28);
+                    gain.gain.setValueAtTime(0.35, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.32);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
 
-        // 成功投放：播放音效并在水池中央漂浮文字
-        function triggerWishSuccess(textContent) {
-            playSplashSound();
+                    // 添加轻微的水花高频
+                    const osc2 = audioCtx.createOscillator();
+                    const gain2 = audioCtx.createGain();
+                    osc2.type = 'triangle';
+                    osc2.frequency.setValueAtTime(1800, now);
+                    osc2.frequency.exponentialRampToValueAtTime(400, now + 0.15);
+                    gain2.gain.setValueAtTime(0.12, now);
+                    gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+                    osc2.connect(gain2);
+                    gain2.connect(audioCtx.destination);
+                    osc2.start(now);
+                    osc2.stop(now + 0.2);
 
-            const pool = document.getElementById('wishingPool');
-            const textElement = document.createElement('div');
-            textElement.className = 'floating-text';
-            textElement.innerText = textContent;
+                    // 低频余韵
+                    const osc3 = audioCtx.createOscillator();
+                    const gain3 = audioCtx.createGain();
+                    osc3.type = 'sine';
+                    osc3.frequency.setValueAtTime(90, now + 0.05);
+                    osc3.frequency.exponentialRampToValueAtTime(40, now + 0.5);
+                    gain3.gain.setValueAtTime(0.15, now + 0.05);
+                    gain3.gain.exponentialRampToValueAtTime(0.01, now + 0.55);
+                    osc3.connect(gain3);
+                    gain3.connect(audioCtx.destination);
+                    osc3.start(now + 0.05);
+                    osc3.stop(now + 0.6);
+                } catch (e) {
+                    // 静默处理
+                }
+            }
 
-            // 让文字在水池中心稍微随机抖动一点位置，更生动
-            const randomX = Math.floor(Math.random() * 40) - 20; 
-            textElement.style.left = `calc(50% + ${randomX}px)`;
+            // ==================== 涟漪系统 ====================
+            let ripples = [];
 
-            pool.appendChild(textElement);
+            function addRipple(x, y) {
+                ripples.push({
+                    x: x,
+                    y: y,
+                    radius: 2,
+                    maxRadius: Math.max(canvasW, canvasH) * 0.35,
+                    opacity: 0.7,
+                    speed: 1.8 + Math.random() * 1.2,
+                    lineWidth: 1.5 + Math.random() * 1.5,
+                });
+                // 限制涟漪数量
+                if (ripples.length > 15) ripples.shift();
+            }
 
-            // 动画结束后自动销毁 DOM 节点，防止内存占用
-            textElement.addEventListener('animationend', () => {
-                textElement.remove();
+            function updateRipples() {
+                for (let i = ripples.length - 1; i >= 0; i--) {
+                    const r = ripples[i];
+                    r.radius += r.speed;
+                    r.opacity -= 0.008;
+                    r.lineWidth *= 0.995;
+                    if (r.opacity <= 0 || r.radius > r.maxRadius) {
+                        ripples.splice(i, 1);
+                    }
+                }
+            }
+
+            function drawRipples() {
+                for (const r of ripples) {
+                    ctx.beginPath();
+                    ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+                    ctx.strokeStyle = `rgba(210,180,130,${r.opacity})`;
+                    ctx.lineWidth = r.lineWidth;
+                    ctx.shadowColor = `rgba(240,200,140,${r.opacity * 0.6})`;
+                    ctx.shadowBlur = 12;
+                    ctx.stroke();
+                    ctx.shadowColor = 'transparent';
+                    ctx.shadowBlur = 0;
+
+                    // 内圈副涟漪
+                    if (r.radius > 18) {
+                        ctx.beginPath();
+                        ctx.arc(r.x, r.y, r.radius * 0.55, 0, Math.PI * 2);
+                        ctx.strokeStyle = `rgba(240,210,160,${r.opacity * 0.5})`;
+                        ctx.lineWidth = r.lineWidth * 0.6;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // ==================== 水面绘制 ====================
+            let time = 0;
+
+            function drawWaterSurface() {
+                // 水面基底
+                const waterGrad = ctx.createRadialGradient(pondCenterX, pondCenterY - pondRadiusY * 0.2,
+                    pondRadiusX * 0.15, pondCenterX, pondCenterY, pondRadiusX * 0.85);
+                waterGrad.addColorStop(0, '#1a2840');
+                waterGrad.addColorStop(0.4, '#0f1a2c');
+                waterGrad.addColorStop(0.75, '#0a1422');
+                waterGrad.addColorStop(1, '#060d18');
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.ellipse(pondCenterX, pondCenterY, pondRadiusX, pondRadiusY, 0, 0, Math.PI * 2);
+                ctx.clip();
+                ctx.fillStyle = waterGrad;
+                ctx.fillRect(pondCenterX - pondRadiusX, pondCenterY - pondRadiusY, pondRadiusX * 2, pondRadiusY * 2);
+
+                // 月光倒影
+                const moonReflectGrad = ctx.createRadialGradient(
+                    pondCenterX + pondRadiusX * 0.25, pondCenterY - pondRadiusY * 0.3,
+                    pondRadiusX * 0.08,
+                    pondCenterX + pondRadiusX * 0.25, pondCenterY - pondRadiusY * 0.3,
+                    pondRadiusX * 0.55
+                );
+                moonReflectGrad.addColorStop(0, 'rgba(255,230,180,0.25)');
+                moonReflectGrad.addColorStop(0.5, 'rgba(255,210,150,0.08)');
+                moonReflectGrad.addColorStop(1, 'rgba(255,180,100,0)');
+                ctx.fillStyle = moonReflectGrad;
+                ctx.fillRect(pondCenterX - pondRadiusX, pondCenterY - pondRadiusY, pondRadiusX * 2, pondRadiusY * 2);
+
+                // 微弱水波纹
+                ctx.globalAlpha = 0.06;
+                for (let i = 0; i < 6; i++) {
+                    const wx = pondCenterX + Math.sin(time * 0.4 + i * 1.7) * pondRadiusX * 0.5;
+                    const wy = pondCenterY - pondRadiusY * 0.2 + Math.cos(time * 0.35 + i * 2.1) * pondRadiusY * 0.35;
+                    const wr = pondRadiusX * (0.12 + Math.sin(time * 0.5 + i) * 0.06);
+                    ctx.beginPath();
+                    ctx.arc(wx, wy, wr, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255,255,240,0.5)';
+                    ctx.fill();
+                }
+                ctx.globalAlpha = 1;
+
+                ctx.restore();
+            }
+
+            // ==================== 铜钱系统 ====================
+            let coins = [];
+
+            function spawnCoin(targetX, targetY, isPremium = false) {
+                const startX = pondCenterX + (Math.random() - 0.5) * pondRadiusX * 1.2;
+                const startY = pondCenterY - pondRadiusY * 1.4 - Math.random() * 60;
+                coins.push({
+                    x: startX,
+                    y: startY,
+                    targetX: targetX || pondCenterX + (Math.random() - 0.5) * pondRadiusX * 0.5,
+                    targetY: targetY || pondCenterY - pondRadiusY * 0.1 + Math.random() * pondRadiusY * 0.3,
+                    speed: 2.5 + Math.random() * 2,
+                    rotation: Math.random() * Math.PI * 2,
+                    rotSpeed: (Math.random() - 0.5) * 0.08,
+                    scaleX: 1,
+                    isPremium: isPremium,
+                    landed: false,
+                    landingTimer: 0,
+                    size: isPremium ? 18 : 14,
+                });
+                if (coins.length > 25) coins.shift();
+            }
+
+            function updateCoins() {
+                for (let i = coins.length - 1; i >= 0; i--) {
+                    const c = coins[i];
+                    if (!c.landed) {
+                        c.y += c.speed;
+                        c.rotation += c.rotSpeed;
+                        // 翻转效果
+                        c.scaleX = 1 - Math.abs(Math.sin(c.rotation)) * 0.55;
+
+                        // 到达目标水面
+                        if (c.y >= c.targetY) {
+                            c.y = c.targetY;
+                            c.landed = true;
+                            c.landingTimer = 0;
+                            // 触发涟漪
+                            addRipple(c.targetX, c.targetY);
+                            // 触发音效
+                            playSplashSound();
+                            // 触发文字
+                            if (c.isPremium) {
+                                spawnFloatingText(c.targetX, c.targetY, '总分加一百', true);
+                                updateScore(100);
+                            } else {
+                                spawnFloatingText(c.targetX, c.targetY, '总分加一', false);
+                                updateScore(1);
+                            }
+                        }
+                    } else {
+                        c.landingTimer++;
+                        if (c.landingTimer > 50) {
+                            coins.splice(i, 1);
+                        }
+                    }
+                }
+            }
+
+            function drawCoin(ctx, x, y, size, rotation, scaleX, isPremium, landed) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(rotation);
+                ctx.scale(scaleX, 1);
+
+                const alpha = landed ? Math.max(0, 1 - (coins.find(c => c.x === x && c.y === y)?.landingTimer || 0) /
+                    50) : 1;
+                ctx.globalAlpha = alpha;
+
+                // 外圆
+                const outerGrad = ctx.createRadialGradient(0, -size * 0.2, size * 0.05, 0, 0, size);
+                if (isPremium) {
+                    outerGrad.addColorStop(0, '#fffef0');
+                    outerGrad.addColorStop(0.25, '#f5e0a0');
+                    outerGrad.addColorStop(0.6, '#d4a745');
+                    outerGrad.addColorStop(0.85, '#8b6914');
+                    outerGrad.addColorStop(1, '#5c3d0a');
+                } else {
+                    outerGrad.addColorStop(0, '#f0dda0');
+                    outerGrad.addColorStop(0.3, '#d4b050');
+                    outerGrad.addColorStop(0.65, '#a07828');
+                    outerGrad.addColorStop(0.9, '#6b4a10');
+                    outerGrad.addColorStop(1, '#4a2e08');
+                }
+                ctx.beginPath();
+                ctx.arc(0, 0, size, 0, Math.PI * 2);
+                ctx.fillStyle = outerGrad;
+                ctx.fill();
+                ctx.strokeStyle = isPremium ? 'rgba(180,140,50,0.8)' : 'rgba(140,100,30,0.7)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // 内方孔
+                const holeSize = size * 0.3;
+                ctx.fillStyle = '#0a0806';
+                ctx.fillRect(-holeSize, -holeSize, holeSize * 2, holeSize * 2);
+                ctx.strokeStyle = 'rgba(80,50,20,0.5)';
+                ctx.lineWidth = 0.8;
+                ctx.strokeRect(-holeSize, -holeSize, holeSize * 2, holeSize * 2);
+
+                // 高光
+                ctx.beginPath();
+                ctx.arc(-size * 0.25, -size * 0.3, size * 0.35, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255,255,240,0.2)';
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+            function drawAllCoins() {
+                for (const c of coins) {
+                    drawCoin(ctx, c.x, c.y, c.size, c.rotation, c.scaleX, c.isPremium, c.landed);
+                }
+            }
+
+            // ==================== 浮动文字 ====================
+            function spawnFloatingText(x, y, text, isPremium) {
+                const el = document.createElement('span');
+                el.className = 'floating-text';
+                el.textContent = text;
+                if (isPremium) {
+                    el.style.fontSize = '1.35rem';
+                    el.style.color = '#fff8d0';
+                    el.style.textShadow =
+                        '0 0 22px rgba(255,220,100,1), 0 0 45px rgba(240,180,50,0.7), 0 0 65px rgba(200,130,20,0.5)';
+                }
+                // 计算在pondScene中的相对位置
+                const sceneRect = pondScene.getBoundingClientRect();
+                const canvasRect = canvas.getBoundingClientRect();
+                const relX = x - sceneRect.left;
+                const relY = y - sceneRect.top;
+                el.style.left = relX + 'px';
+                el.style.top = relY + 'px';
+                el.style.transform = 'translate(-50%, -50%)';
+                floatingTexts.appendChild(el);
+
+                // 动画结束后移除
+                const animDuration = 2800;
+                setTimeout(() => {
+                    if (el.parentNode) el.parentNode.removeChild(el);
+                }, animDuration + 100);
+
+                // 限制同时存在的文字数量
+                const allTexts = floatingTexts.querySelectorAll('.floating-text');
+                if (allTexts.length > 10) {
+                    allTexts[0].remove();
+                }
+            }
+
+            // ==================== 分数更新 ====================
+            function updateScore(delta) {
+                totalScore += delta;
+                scoreDisplay.textContent = totalScore;
+                scoreBetweenValue.textContent = totalScore;
+                // 分数跳动动画
+                scoreDisplay.style.transform = 'scale(1.15)';
+                scoreBetweenValue.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    scoreDisplay.style.transform = 'scale(1)';
+                    scoreBetweenValue.style.transform = 'scale(1)';
+                }, 200);
+                scoreDisplay.style.transition = 'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
+                scoreBetweenValue.style.transition = 'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
+            }
+
+            // ==================== 弹窗逻辑 ====================
+            function openModal() {
+                if (isModalOpen) return;
+                isModalOpen = true;
+                paymentClicked = false;
+                modalMessage.textContent = '要向白付费';
+                modalMessage.classList.remove('shock');
+                btnPay.classList.remove('hidden');
+                modalCloseHint.classList.remove('visible');
+                modalOverlay.classList.add('active');
+                btnPay.textContent = '支 付';
+                btnPay.style.display = 'inline-block';
+            }
+
+            function closeModal() {
+                isModalOpen = false;
+                modalOverlay.classList.remove('active');
+                // 短暂延迟后重置
+                setTimeout(() => {
+                    if (!isModalOpen) {
+                        modalMessage.textContent = '要向白付费';
+                        modalMessage.classList.remove('shock');
+                        btnPay.classList.remove('hidden');
+                        btnPay.style.display = 'inline-block';
+                        btnPay.textContent = '支 付';
+                        modalCloseHint.classList.remove('visible');
+                        paymentClicked = false;
+                    }
+                }, 400);
+            }
+
+            btnPay.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (paymentClicked) return;
+                paymentClicked = true;
+                // 显示"你爹不可能向你要钱"
+                modalMessage.textContent = '你爹不可能向你要钱';
+                modalMessage.classList.add('shock');
+                btnPay.classList.add('hidden');
+                btnPay.style.display = 'none';
+                modalCloseHint.classList.add('visible');
+
+                // 短暂显示后关闭弹窗并给予付费硬币
+                setTimeout(() => {
+                    closeModal();
+                    premiumUnlocked = true;
+                    // 触发付费硬币效果
+                    triggerPremiumCoin();
+                }, 1800);
             });
-        }
+
+            // 点击弹窗背景也可关闭（在显示shock消息后）
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === modalOverlay && paymentClicked) {
+                    closeModal();
+                    if (!premiumUnlocked) {
+                        premiumUnlocked = true;
+                        triggerPremiumCoin();
+                    }
+                }
+            });
+
+            function triggerPremiumCoin() {
+                const tx = pondCenterX + (Math.random() - 0.5) * pondRadiusX * 0.5;
+                const ty = pondCenterY - pondRadiusY * 0.1 + Math.random() * pondRadiusY * 0.3;
+                spawnCoin(tx, ty, true);
+            }
+
+            // ==================== 按钮事件 ====================
+            btnNormal.addEventListener('click', () => {
+                initAudio();
+                const tx = pondCenterX + (Math.random() - 0.5) * pondRadiusX * 0.5;
+                const ty = pondCenterY - pondRadiusY * 0.1 + Math.random() * pondRadiusY * 0.3;
+                spawnCoin(tx, ty, false);
+                // 按钮反馈
+                btnNormal.style.transform = 'scale(0.88)';
+                setTimeout(() => { btnNormal.style.transform = ''; }, 150);
+            });
+
+            btnPremium.addEventListener('click', () => {
+                initAudio();
+                if (!premiumUnlocked) {
+                    // 第一次点击，弹出弹窗
+                    openModal();
+                } else {
+                    // 已解锁，直接投付费硬币
+                    const tx = pondCenterX + (Math.random() - 0.5) * pondRadiusX * 0.5;
+                    const ty = pondCenterY - pondRadiusY * 0.1 + Math.random() * pondRadiusY * 0.3;
+                    spawnCoin(tx, ty, true);
+                }
+                // 按钮反馈
+                btnPremium.style.transform = 'scale(0.88)';
+                setTimeout(() => { btnPremium.style.transform = ''; }, 150);
+            });
+
+            // ==================== 主循环 ====================
+            function animate(timestamp) {
+                time = timestamp * 0.001;
+                updateCoins();
+                updateRipples();
+
+                ctx.clearRect(0, 0, canvasW, canvasH);
+                drawWaterSurface();
+                drawRipples();
+                drawAllCoins();
+
+                requestAnimationFrame(animate);
+            }
+
+            // ==================== 初始化 ====================
+            function init() {
+                resizeCanvas();
+                // 初始化时投一枚示范铜钱
+                setTimeout(() => {
+                    const tx = pondCenterX;
+                    const ty = pondCenterY - pondRadiusY * 0.05;
+                    spawnCoin(tx, ty, false);
+                }, 600);
+                requestAnimationFrame(animate);
+            }
+
+            // 处理初始显示
+            resizeCanvas();
+            setTimeout(() => {
+                resizeCanvas();
+                const tx = pondCenterX;
+                const ty = pondCenterY - pondRadiusY * 0.05;
+                spawnCoin(tx, ty, false);
+            }, 700);
+            requestAnimationFrame(animate);
+
+            // 窗口大小改变时重新计算
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+            });
+
+            // 触摸设备防止双击缩放
+            document.addEventListener('dblclick', function(e) {
+                if (e.target.closest('.coin-btn') || e.target.closest('.btn-pay')) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            console.log('🏮 高考许愿池已就绪 | 金榜题名 · 前程似锦 🏮');
+            console.log('  普通铜钱 +1分 | 付费金钱 +100分');
+            console.log('  许愿文字从涟漪中升起消散 ✨');
+        })();
     </script>
 </body>
 </html>
